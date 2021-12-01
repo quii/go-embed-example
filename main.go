@@ -12,6 +12,9 @@ import (
 //go:embed embedded-data
 var data embed.FS
 
+//go:embed embedded-data/file1.txt
+var contentsOfFile1 string
+
 func main() {
 	{
 		subDir, _ := fs.Sub(data, "embedded-data")
@@ -22,11 +25,11 @@ func main() {
 		folderPath := "normal-fs"
 		normalFS := os.DirFS(folderPath)
 		poop := findThePoop(normalFS)
-		fmt.Printf("the files containing poop %q are %v", folderPath, poop)
+		fmt.Printf("the files containing poop in %q are %v", folderPath, poop)
 	}
 }
 
-func findThePoop(filesystem fs.FS) (poopyfiles []string){
+func findThePoop(filesystem fs.FS) (poopyfiles []string) {
 	dir, _ := fs.ReadDir(filesystem, ".")
 	for _, file := range dir {
 		if fileIsPoopy(filesystem, file.Name()) {
