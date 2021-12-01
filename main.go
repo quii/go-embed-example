@@ -16,6 +16,8 @@ var data embed.FS
 var contentsOfFile1 string
 
 func main() {
+	fmt.Println("the contents of embedded-data/file1.txt is:", contentsOfFile1)
+
 	{
 		subDir, _ := fs.Sub(data, "embedded-data")
 		poop := findThePoop(subDir)
@@ -43,6 +45,5 @@ func fileIsPoopy(filesystem fs.FS, fileName string) bool {
 	f, _ := filesystem.Open(fileName)
 	defer f.Close()
 	data, _ := io.ReadAll(f)
-	isPoopy := strings.Contains(string(data), "poop")
-	return isPoopy
+	return strings.Contains(string(data), "poop")
 }
